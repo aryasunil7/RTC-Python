@@ -44,6 +44,7 @@ code_url = c_root_git_url + args.app_code
 ownerItemId = c_projectId
 currentPAItemId = c_projectId
 
+#Checking RTC url status
 try:
 	ses = requests.Session()
 	req = ses.get(c_jazzRepoUrl + c_auth_api, verify=False)
@@ -53,6 +54,7 @@ except requests.exceptions.HTTPError as err:
 	print("Invalid request " , err)
 	sys.exit()
 
+#Authentication
 try:
 	data = {
 	   'j_username': c_jazz_username ,
@@ -61,7 +63,8 @@ try:
 	req = ses.post(c_jazzRepoUrl + c_authentication_api, data=data, verify=False)
 except KeyError:
 	print("Authentication failed")
-		
+
+#Repo Registration	
 headers ={
 		'Accept':'text/json'
 	}
@@ -77,7 +80,7 @@ for comp in args.component_code:
 	except:
 		print("Repo registration failed")
 		
- 
+#Key Extraction
 try:
 	with open('/tmp/registerKey', 'r') as response_file:
 		input = response_file.read()
