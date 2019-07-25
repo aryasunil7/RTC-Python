@@ -1,48 +1,79 @@
 import re
 import requests
+import requests.exceptions
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-jazzRepoUrl="https://18.144.18.92:9443/ccm"
-projectId="_noACAKbtEemBaOpk7wfjpg"     # UUID of the jazz project area
-jazzUserId="admin"
-jazzPassword="admin"
-jazzCookiesFile="/tmp/jazzCookies.txt"
-name="GitRepo_arya"
-description="AGitRepository_trial"
-ownerItemId="_noACAKbtEemBaOpk7wfjpg"
-currentPAItemId="_noACAKbtEemBaOpk7wfjpg"
-url="https://github.com/aryasunil7/sample_rtc.git"
+import argparse
+import ConfigParser
+import sys
+from requests.exceptions import ConnectionError
+
+config = ConfigParser.ConfigParser()
+config.read('/home/ubuntu/arya/rtc.ini')
+c_jazzRepoUrl = config.get('Default', 'jazzRepoUrl')
+c_api1 = config.get('Api', 'api1')
+c_api2 = config.get('Api', 'api2')
+c_api3 = config.get('Api', 'api3')
+c_url = config.get('Default', 'root_url')
+c_user = config.get('Credentials', 'username')
+c_password = config.get('Credentials', 'password')
+c_projectId  = config.get('Default', 'projectId')
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-App_code', action="store", dest="App_code",type=str)
+parser.add_argument('-Comp_code', action='append', dest='comp_code',default=[],help='Add repeated values to a list')
+results = parser.parse_args()
+print 'App_code     =', results.App_code
+print 'Comp_code    =',results.comp_code
+
+RTC_git_name = results.App_code
+git_url = c_url + results.App_code 
 
 ses = requests.Session()
+response = requests.get(c_jazzRepoUrl + c_api2, auth=(c_user, c_password),verify=False)
+print(response)	
 
-
-req = ses.get(jazzRepoUrl+'/authenticated/identity',verify=False)
-
-data = {
-  'j_username': jazzUserId,
-  'j_password': jazzPassword
-}
-req = ses.post(jazzRepoUrl + '/authenticated/j_security_check', data=data, verify=False)
-
-
-headers ={
-	'Accept':'text/json'
-}
-payload= {'name': name ,'ownerItemId': ownerItemId,'currentPAItemId': currentPAItemId, 'url':url}
-
-req=ses.post(jazzRepoUrl+'/service/com.ibm.team.git.common.internal.IGitRepositoryRegistrationRestService/RegisterGitRepository' ,params=payload, headers=headers)
-
-with open("/tmp/registerOut1", "a") as file:
-	file.write(req.text)
-
-with open('/tmp/registerOut1','r') as content_file:
-	    input = content_file.read()
+try:
+	req = ses.get(c_jazzRepoUrl + c_api1 ,verify=False)
+	req.raise_for_status()
+except requests.exceptions.HTTPError as e:
+	print('Invalid URL',e)
+	sys.exit() 			
+	
+try:	
+	data = {
+	  'j_username': c_user,
+	  'j_password': c_password
+	}
+	req = ses.post(c_jazzRepoUrl + c_api2, data=data, verify=False)
+	print(req)
+except KeyError:
+	print("Authentication error...!!!")
+	
+try:
+	headers ={
+		'Accept':'text/json'
+	}
+	for i in results.comp_code:
+	
+		name = RTC_git_name+'_'+i
+		url = git_url+'/'+i
+		
+		payload= {'name': name ,'ownerItemId': c_projectId,'currentPAItemId': c_projectId, 'url': url}
+		req=ses.post(c_jazzRepoUrl + c_api3 ,params=payload, headers=headers)
+		
+		with open("/tmp/registerOut", "a+") as file:
+			file.write(req.text)
+	req.raise_for_status()
+except requests.exceptions.HTTPError as e:
+	print("Git Repository not registered...!!!")
+	sys.exit() 
+	
+with open('/tmp/registerOut','r+') as content_file:
+	input = content_file.read()
 matches = re.findall(r',"key":"([a-z0-9]*)"', input)
-print(matches[0])
-
-
+print(matches)
 
 	
 
