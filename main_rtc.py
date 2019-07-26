@@ -34,11 +34,13 @@ print(url)
 
 
 #Checking whether the RTC url is accessible
+
+ses = requests.Session()
+
 try:
-	ses = requests.Session()
 	req = ses.get(c_jazzRepoUrl + c_api_endpoint1, verify=False)
 	req.raise_for_status()
-except requests.exceptions.HTTPError as e:
+except requests.exceptions.RequestException as e:
 	print('Invalid URL',e)
 	sys.exit()
 
@@ -49,7 +51,8 @@ try:
 	  'j_password': c_password
 	}
 	req = ses.post(c_jazzRepoUrl + c_api_endpoint2, data=data, verify=False)
-except:
+	req.raise_for_status()
+except requests.exceptions.HTTPError as e:
 	print(req)
 	print("Authentication error...!!!") 
 	sys.exit()
@@ -62,7 +65,6 @@ try:
 			'Accept':'text/json'
 		}
 		payload= {'name': rtc_git_name+'_'+i ,'ownerItemId': c_projectId,'currentPAItemId': c_projectId, 'url': url+'/'+i}
-
 		req=ses.post(c_jazzRepoUrl+c_api_endpoint3 ,params=payload, headers=headers)
 		req.raise_for_status()
 		print(req)
@@ -73,8 +75,13 @@ except requests.exceptions.HTTPError as e:
 	print("Registration Failed")
 	sys.exit()
 
-#Printing the Keys
-with open('/home/ubuntu/Soorya/registerOut', 'r') as content_file:
-	input = content_file.read()
-matches = re.findall(r',"key":"([a-z0-9]*)"', input)
-print(matches)
+#Printing the Keys and Checking for authentication
+try:
+	with open('/home/ubuntu/Soorya/registerOut', 'r') as content_file:
+		input = content_file.read()
+	matches = re.findall(r',"key":"([a-z0-9]*)"', input)
+	matches[0]
+	print(matches)
+
+except IndexError:
+	print('Authentication Failed')
