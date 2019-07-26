@@ -4,7 +4,7 @@ import re
 import configparser
 import argparse
 import sys
-import logging
+import urllib2
 
 from cookielib import LWPCookieJar
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -12,7 +12,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 #Configparser
 config = configparser.ConfigParser()
-config.read('/home/ubuntu/sruthi/rtcConfig.ini')
+config.read('/home/ubuntu/sruthi/config_rtc.ini')
 ##print(config.sections()) 
 
 #Config_values
@@ -46,10 +46,10 @@ try:
 	auth = session.get(JazzRepoUrl + Auth_api,verify=False)
 	auth.raise_for_status()
 #	print(auth)
-except requests.exceptions.HTTPError as err:
-    print('Session failed')
-    sys.exit(1)
-#   	print('Session failed')
+except requests.exceptions.RequestException as err:
+    print('---Session failed---',err)
+    sys.exit()
+
   
 #Authentication security
 try:
@@ -59,14 +59,12 @@ try:
 	}
 	auth_security = session.post(JazzRepoUrl + Auth_scurity_api, data=data,verify=False)
 	auth_security.raise_for_status()
-	return True
 #	print(auth_security)
-except AuthenticationException:
-    print('Authentication failed')
-    sys.exit(1)
-#	print('Authentication failed',( str(e) ))
-#	raise SystemExit
+except AuthenticationException as e:
+    print('---Authentication failed---')
+    sys.exit()
 
+	
 #GitRepo Registration
 try:
 	for i in args.Comp_code:
@@ -74,15 +72,19 @@ try:
 		headers = {'Accept':'text/json'}
 		gitRepo_registration = session.post(JazzRepoUrl+GitRepo_reg_api, params=payload,headers=headers)
 #		print(gitRepo_registration)
-		with open('/tmp/registerOut'+i, 'a') as content_file:
-			content_file.write(str(gitRepo_registration.text))
-		with open('/tmp/registerOut'+i, 'r') as content_file:
-			input = content_file.read()
-		matches = re.findall(r',"key":"([a-z0-9]*)"', input)
-		print('key: ' + matches)
-#	gitRepo_registration.raise_for_status()
+		with open('/tmp/registerOut', 'a') as file:
+			file.write(str(gitRepo_registration.text))
+	gitRepo_registration.raise_for_status()
 
 except:
-    print('GitRepo registraion failed')
-    sys.exit(1)
-#	print('GitRepo registraion failed')
+    print('---GitRepo registration failed---')
+    sys.exit()
+
+try:
+	with open('/tmp/registerOut', 'r') as content_file:
+		input = content_file.read()
+	matches = re.findall(r',"key":"([a-z0-9]*)"', input)
+	matches[0]
+	print(matches)
+except IndexError:
+	print('---Key not found---')
