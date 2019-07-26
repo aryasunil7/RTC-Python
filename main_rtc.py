@@ -48,9 +48,9 @@ currentPAItemId = c_projectId
 try:
 	ses = requests.Session()
 	req = ses.get(c_jazzRepoUrl + c_auth_api, verify=False)
-	print(req)
+	#print(req)
 	req.raise_for_status()
-except requests.exceptions.HTTPError as err:
+except requests.exceptions.RequestException as err:
 	print("Invalid request " , err)
 	sys.exit()
 
@@ -61,8 +61,11 @@ try:
 	   'j_password': c_jazz_password
 	}
 	req = ses.post(c_jazzRepoUrl + c_authentication_api, data=data, verify=False)
-except KeyError:
+	#print(req)
+	req.raise_for_status()
+except requests.exceptions.HTTPError as err:
 	print("Authentication failed")
+	sys.exit()
 
 #Repo Registration	
 headers ={
@@ -73,19 +76,22 @@ for comp in args.component_code:
 		payload= {'name': app_code + '_' + comp ,'ownerItemId': ownerItemId, 'currentPAItemId': currentPAItemId, 'url': code_url + '/' + comp} 
 
 		req = ses.post(c_jazzRepoUrl + c_repo_reg_api, params=payload, headers=headers)
+		req.raise_for_status()
 		
 		with open('/tmp/registerKey', "a") as myfile:
 		   myfile.write(str(req.text))
-	 
-	except:
+	except requests.exceptions.HTTPError as err:
 		print("Repo registration failed")
+		sys.exit()
 		
 #Key Extraction
 try:
 	with open('/tmp/registerKey', 'r') as response_file:
 		input = response_file.read()
 	response_key = re.findall(r',"key":"([a-z0-9]*)"', input)
+	response_key[0]
 	print(response_key)
-except:
-	print("Key extraction failed")
+except IndexError:
+	print("Authentication and Key extraction failed")
+	 
 	
