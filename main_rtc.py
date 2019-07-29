@@ -25,7 +25,7 @@ component_code = args.component_code
 
 #Reading configfile.ini using configparser
 config = configparser.ConfigParser()
-config.read('configfile.ini')
+config.read('rtc.ini')
 #print(config.sections())
 
 #Config_file variables
