@@ -1,87 +1,102 @@
-import re
-import requests
-import requests.exceptions
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+import configparser
+from configparser import ConfigParser, NoOptionError, NoSectionError 
+
 import argparse
-import ConfigParser
+import re
 import sys
-from requests.exceptions import ConnectionError
+import os
 
-#Reading the values from the config file
-config = ConfigParser.ConfigParser()
-config.read('/home/ubuntu/arya/git/rtc.ini')
-c_jazzRepoUrl = config.get('Default', 'jazzRepoUrl')
-c_api1 = config.get('Api', 'api1')
-c_api2 = config.get('Api', 'api2')
-c_api3 = config.get('Api', 'api3')
-c_url = config.get('Default', 'root_url')
-c_user = config.get('Credentials', 'username')
-c_password = config.get('Credentials', 'password')
-c_projectId  = config.get('Default', 'projectId')
+import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-#To get Application code and Component code from Command Line
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+#Taking application code and component code through command line using argparser
 parser = argparse.ArgumentParser()
-parser.add_argument('-App_code', action="store", dest="App_code",type=str)
-parser.add_argument('-Comp_code', action='append', dest='comp_code',default=[],help='Add repeated values to a list')
-results = parser.parse_args()
+parser.add_argument('-app_code', action='store', dest='app_code', type=str)
+parser.add_argument('-component_code', action='append', dest='component_code', default=[], type=str)
+args = parser.parse_args()
+#print(args.component_code)
 
+#argparse variables
+app_code = args.app_code
+component_code = args.component_code
 
-RTC_git_name = results.App_code
-git_url = c_url + results.App_code 
+#Reading configfile.ini using configparser
+config = configparser.ConfigParser()
+config.read('configfile.ini')
+#print(config.sections())
 
-#Create a session
-ses = requests.Session()
-
-#Authenticating the RTC Repo URL
+#Config_file variables
 try:
-	req = ses.get(c_jazzRepoUrl + c_api1 ,verify=False)
-	req.raise_for_status()
+	c_jazzRepoUrl= config.get('Default','jazzRepoUrl')
+	c_git_url= config.get('Default','git_url')
+	c_api_endpoint1 = config.get('API','api_endpoint1')
+	c_api_endpoint2 = config.get('API','api_endpoint2')
+	c_api_endpoint3 = config.get('API','api_endpoint3')
+	c_projectId = config.get('Default','projectId')
+	c_username = config.get('User','username')
+	c_password = config.get('User','password')
+except NoOptionError as err:
+	sys.exit(str(err) + "It should be provided") 
 
-except requests.exceptions.RequestException as e:
-	print('Invalid URL',e)
-	sys.exit() 			
 	
-try:	
+if not (c_jazzRepoUrl and c_git_url and c_api_endpoint1 and c_api_endpoint2 and c_api_endpoint3 and c_projectId and c_username and c_password):
+	sys.exit("Error: Check the values in the config_file")
+
+
+code_url = c_git_url + args.app_code
+
+ownerItemId = c_projectId
+currentPAItemId = c_projectId
+
+#Checking RTC url status
+try:
+	ses = requests.Session()
+	res = ses.get(c_jazzRepoUrl + c_api_endpoint1, verify=False)
+	#print(res)
+	res.raise_for_status()
+except requests.exceptions.RequestException as err: 
+	sys.exit("Something went wrong in c_jazzRepoUrl.. Please check " + str(err))
+
+#Authentication
+try:
 	data = {
-	  'j_username': c_user,
-	  'j_password': c_password
+	   'j_username': c_username ,
+	   'j_password': c_password
 	}
-	req = ses.post(c_jazzRepoUrl + c_api2, data=data, verify=False)
+	res = ses.post(c_jazzRepoUrl + c_api_endpoint2, data=data, verify=False)
+	res.raise_for_status()
 	
-except KeyError:
-	print("Authentication error...!!!")
-	
-#Registering the Git Repositories and writing the response to /tmp/registerOut
-try:
-	headers ={
+except (requests.exceptions.RequestException,requests.HTTPError,requests.exceptions.ConnectionError) as err:
+	sys.exit("Something went wrong in api, Please check again" + str(err))
+
+#Repo Registration	
+headers ={
 		'Accept':'text/json'
 	}
-	for i in results.comp_code:
 	
-		name = RTC_git_name+'_'+i
-		url = git_url+'/'+i
+comp_key={comp: '' for comp in args.component_code}
+for comp in args.component_code:
+	try:
+		payload= {'name': app_code + '_' + comp ,'ownerItemId': ownerItemId, 'currentPAItemId': currentPAItemId, 'url': code_url + '/' + comp} 
+
+		res = ses.post(c_jazzRepoUrl + c_api_endpoint3, params=payload, headers=headers)
+		res.raise_for_status()
 		
-		payload= {'name': name ,'ownerItemId': c_projectId,'currentPAItemId': c_projectId, 'url': url}
-		req=ses.post(c_jazzRepoUrl + c_api3 ,params=payload, headers=headers)
+	except requests.exceptions.HTTPError as err:
+		print("Repo registration failed for " + app_code + "_" + comp + str(err))
 		
-		with open("/tmp/registerOut", "a+") as file:
-			file.write(req.text)
-	
-except requests.exceptions.HTTPError as e:
-	print("Git Repository not registered...!!!")
-	sys.exit() 
+		
+    #Key Extraction
+	try:
+		registerKey = str(res.text)
+		response_key = re.findall(r',"key":"([a-z0-9]*)"', registerKey)
+		#print(res.json()['soapenv:Body']['response']['returnValue']['value']['key'])
+		comp_key[comp] = response_key[0]
+		
+	except IndexError:
+		print("Authentication and Key extraction failed for " + app_code + "_" + comp)
 
-#Generating the key of the registered repositories
-try:	
-	with open('/tmp/registerOut','r+') as content_file:
-		input = content_file.read()
-	matches = re.findall(r',"key":"([a-z0-9]*)"', input)
-	matches[0]
-	print(matches)
-except IndexError:
-	print('Authentication Failed')
-	
-
-
-
+print(comp_key)
