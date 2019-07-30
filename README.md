@@ -11,10 +11,10 @@ Application code 'app_code' and Component code 'comp_code' values are given thro
 - "jazzRepoUrl/service/com.ibm.team.git.common.internal.IGitRepositoryRegistrationRestService/RegisterGitRepository?name=$name&ownerItemId=$ownerItemId&currentPAItemId=$currentPAItemId&url=$url&description=$description" is the RTC URL for registering the git repository in RTC
 - Keys for the registered repositories are generated and stored in a dictionary
 
-I) Requirement requests
-   ---------------------
+I) Requirement 
+   -------------
    
-   2.9.1
+   requests==2.9.1
 
 II) Modules
    ----------
