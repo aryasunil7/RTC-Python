@@ -79,4 +79,4 @@ II) Modules
         
   - To run the application: 
   
-         python rtc.py -App_code XYZ -Comp_code frontend -Comp_code UI
+         python main_rtc.py --app_code XYZ --component_code Frontend Backend UI
