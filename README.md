@@ -59,5 +59,5 @@ II) Modules
 
         sys.exit()
         
-  - To run the application
+  - To run the application: 
          python rtc.py -App_code XYZ -Comp_code frontend -Comp_code UI
