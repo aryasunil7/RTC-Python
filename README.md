@@ -24,14 +24,15 @@ II) Modules
    Requests is a Python module that one can use to send all kinds of HTTP requests. It is an easy-to-use library with a lot of features ranging from passing parameters in URLs to sending custom headers and SSL Verification. The library installed is used to send simple HTTP requests in Python.
                 
     i) Installation
-        pip install requests
+       
+           pip install requests
 
     ii) Usage
     
-        import requests
+           import requests
 
-        res = ses.get(url)
-        res = ses.post(url)                   
+           res = ses.get(url)
+           res = ses.post(url)                   
   
   b) ConfigParser
   
@@ -39,11 +40,11 @@ II) Modules
         
      i) Usage
      
-        import configparser
+           import configparser
 
-        config = configparser.ConfigParser()
-        config.read('example.ini')    
-            variable_name= config.get('session','option')
+           config = configparser.ConfigParser()
+           config.read('example.ini')    
+           variable_name= config.get('session','option')
                                 
   c) ArgParser
   
@@ -51,11 +52,11 @@ II) Modules
         
      i) Usage
      
-        import argparse
+           import argparse
 
-        parser = argparse.ArgumentParser()
-        parser.add_argument('-app_code', action='store', dest='app_code', type=str)             
-        args = parser.parse_args()
+           parser = argparse.ArgumentParser()
+           parser.add_argument('-app_code', action='store', dest='app_code', type=str)             
+           args = parser.parse_args()
 
   d) Regex 
        
@@ -63,9 +64,9 @@ II) Modules
         
      i) Usage
      
-        import re
+           import re
   
-        response_key = re.findall(r',"key":"([a-z0-9]*)"', registerKey)
+           response_key = re.findall(r',"key":"([a-z0-9]*)"', registerKey)
 
   e) sys
   
@@ -73,10 +74,10 @@ II) Modules
         
      i) Usage 
      
-        import sys
+           import sys
 
-        sys.exit()
+           sys.exit()
         
   - To run the application: 
   
-         python main_rtc.py --app_code XYZ --component_code Frontend Backend UI
+              python main_rtc.py --app_code XYZ --component_code Frontend Backend UI
