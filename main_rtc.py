@@ -31,7 +31,7 @@ if not (c_jazzRepoUrl and c_git_url and c_projectId and  c_api_endpoint1 and  c_
 
 #Using argparse for app_code comp_code to parse there values through commandline
 parser = argparse.ArgumentParser()
-parser.add_argument('-app_code', dest='app_code', action="store", type=str,help='enter an app_code of type string', required=True)
+parser.add_argument('-app_code', dest='app_code', action="store",help='enter an app_code of type string', required=True)
 parser.add_argument('--comp_code', dest='comp_code',nargs='+',help='enter a list of component code of type string', required=True)
 results =  parser.parse_args()
 print("App Code=    ",results.app_code)
