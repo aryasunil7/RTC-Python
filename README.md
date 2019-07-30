@@ -23,11 +23,11 @@ II) Modules
   
    Requests is a Python module that one can use to send all kinds of HTTP requests. It is an easy-to-use library with a lot of features ranging from passing parameters in URLs to sending custom headers and SSL Verification. The library installed is used to send simple HTTP requests in Python.
                 
-    i) Installation
+     Installation
        
            pip install requests
 
-    ii) Usage
+     Usage
     
            import requests
 
@@ -38,7 +38,7 @@ II) Modules
   
    This module provides the ConfigParser class which implements a basic configuration language which provides a structure similar to what’s found in Microsoft Windows INI files. One can use this to write Python programs which can be customized by end users easily.
         
-     i) Usage
+      Usage
      
            import configparser
 
@@ -50,7 +50,7 @@ II) Modules
   
    Python argparse is the recommended command-line argument parsing module in Python.
         
-     i) Usage
+      Usage
      
            import argparse
 
@@ -62,7 +62,7 @@ II) Modules
        
    A regular expression in a programming language is a special text string used for describing a search pattern. It is extremely useful for extracting information from text such as code, files, log, spreadsheets or even documents.
         
-     i) Usage
+      Usage
      
            import re
   
@@ -72,7 +72,7 @@ II) Modules
   
    This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter.
         
-     i) Usage 
+      Usage 
      
            import sys
 
