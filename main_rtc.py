@@ -10,8 +10,10 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Taking application code and component code through command line using argparser
 parser = argparse.ArgumentParser()
-parser.add_argument('--app_code', action='store', dest='app_code', required=True)
-parser.add_argument('--component_code', dest='component_code', nargs='+', required=True)
+parser.add_argument('--app_code', action='store', dest='app_code', required=True,
+                    help='Three letter code for the application.')
+parser.add_argument('--component_code', dest='component_code', nargs='+', required=True,
+                    help='Component code. If multiple components, provide component codes interleaved with spaces.')
 args = parser.parse_args()
 
 # argparse variables
