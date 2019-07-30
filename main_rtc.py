@@ -3,15 +3,15 @@ import argparse
 import re
 import sys
 import requests
-import urllib3
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 # API Definitions
-api_endpoint1= '/authenticated/identity'
-api_endpoint2= '/authenticated/j_security_check'
-api_endpoint3= '/service/com.ibm.team.git.common.internal.IGitRepositoryRegistrationRestService/RegisterGitRepository'
+api_endpoint1 = '/authenticated/identity'
+api_endpoint2 = '/authenticated/j_security_check'
+api_endpoint3 = '/service/com.ibm.team.git.common.internal.IGitRepositoryRegistrationRestService/RegisterGitRepository'
 
 # Mute insecure warning 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 # Taking application code and component code through command line using argparser
 parser = argparse.ArgumentParser()
@@ -73,7 +73,6 @@ headers = {
 
 # Dictionary of the format {component_code: key}
 comp_key = {comp: '' for comp in component_code}
-
 for comp in component_code:
     try:
         payload = {'name': app_code + '_' + comp, 'ownerItemId': ownerItemId, 'currentPAItemId': currentPAItemId,
@@ -89,9 +88,13 @@ for comp in component_code:
         # Key Fetching from Json - res.json()['soapenv:Body']['response']['returnValue']['value']['key'])
 
     except (requests.exceptions.HTTPError, IndexError) as err:
-        comp_key[comp] = "Git Repo registration failed for component: {}. Please check settings in rtc.ini file and " \
-                         "try again.\n Error: {}".format(comp, str(err))
+        comp_key[comp] = "Error!:Git Repo registration failed for component: {}. Please check whether the git repo at" \
+                         " {} is already registered. If not, Please check settings in rtc.ini file and try again. " \
+                         "Error: {}".format(comp, git_url + '/' + comp, str(err))
     except requests.exceptions.ConnectionError as err:
         sys.exit("ERROR!. Could not connect to the server. Please check internet connectivity and try again.\n Error: "
                  "{}".format(str(err)))
-print(comp_key)
+import pprint
+printer = pprint.PrettyPrinter()
+printer.pprint(comp_key)
+
