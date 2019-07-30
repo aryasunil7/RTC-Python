@@ -1,6 +1,6 @@
 # RTC-Python
 											
- RTC-Python is developed in Python2.This application is developed for integrating RTC and GitHub such that it will automate the Repo_registration in Rtc and extraction of key.
+RTC-Python application is developed in Python2. This application is developed for integrating RTC and GitHub such that it will automate the Repo_registration in Rtc and extraction of key.
 
 The 'jazzRepoUrl','git_url','projectId','username','password','api_endpoint1','api_endpoint2','api_endpoint3' values are read from rtc_config.ini using ConfigParser 
 
