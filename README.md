@@ -10,10 +10,11 @@ A session is first created
 "jazzRepoUrl/authenticated/identity" and "jazzRepoUrl/authenticated/j_security_check" are the two RTC URL for authenticating
 "jazzRepoUrl/service/com.ibm.team.git.common.internal.IGitRepositoryRegistrationRestService/RegisterGitRepository?name=$name&ownerItemId=$ownerItemId&currentPAItemId=$currentPAItemId&url=$url&description=$description" is the RTC URL for registering the git repository in RTC
 Keys for the registered repositories are generated and stored in a dictionary
-I) Requirement requests==2.22.0
+
+I) Requirement requests==2.9.1
 
 II) Modules
-   ---------
+  
   a) requests
        Requests is a Python module that you can use to send all kinds of HTTP requests. It is an easy-to-use library with a lot of features ranging from passing parameters in URLs to sending custom headers and SSL Verification. In this tutorial, you will learn how to use this library to send simple HTTP requests in Python.
                 
@@ -33,7 +34,7 @@ II) Modules
 
         config = configparser.ConfigParser()
         config.read('example.ini')    
-                                    variable_name= config.get('session','option')
+            variable_name= config.get('session','option')
                                 
   c) argparse
         Python argparse is the recommended command-line argument parsing module in Python.
@@ -57,3 +58,6 @@ II) Modules
         import sys
 
         sys.exit()
+        
+  - To run the application
+         python rtc.py -App_code XYZ -Comp_code frontend -Comp_code UI
