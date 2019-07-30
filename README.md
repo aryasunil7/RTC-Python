@@ -63,7 +63,7 @@ II) Modules
 		
 III) Explanation
     -------------
-	- The app_code and component_code are taken through command line using argparser.
-	- The help message in the argparser will provide the details we have to provide.
-	- The rest of the details are taken from the configuration file(rtc.ini).
+ - The app_code and component_code are taken through command line using argparser.
+ - The help message in the argparser will provide the details we have to provide.
+ - The rest of the details are taken from the configuration file(rtc.ini).
      
