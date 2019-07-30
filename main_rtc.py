@@ -43,7 +43,7 @@ except NoOptionError as err:
 
 	
 if not (c_jazzRepoUrl and c_git_url and c_api_endpoint1 and c_api_endpoint2 and c_api_endpoint3 and c_projectId and c_username and c_password):
-	sys.exit("Error: Check the values in the config_file")
+	raise sys.exit("Error: Check the values in the config_file")
 
 
 code_url = c_git_url + args.app_code
