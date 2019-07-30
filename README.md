@@ -21,7 +21,7 @@ II) Modules
    
   a) Requests
   
-    Requests is a Python module that one can use to send all kinds of HTTP requests. It is an easy-to-use library with a lot of features ranging from passing parameters in URLs to sending custom headers and SSL Verification. The library installed is used to send simple HTTP requests in Python.
+   Requests is a Python module that one can use to send all kinds of HTTP requests. It is an easy-to-use library with a lot of features ranging from passing parameters in URLs to sending custom headers and SSL Verification. The library installed is used to send simple HTTP requests in Python.
                 
     i) Installation
         pip install requests
@@ -35,7 +35,7 @@ II) Modules
   
   b) ConfigParser
   
-        This module provides the ConfigParser class which implements a basic configuration language which provides a structure similar to what’s found in Microsoft Windows INI files. One can use this to write Python programs which can be customized by end users easily.
+   This module provides the ConfigParser class which implements a basic configuration language which provides a structure similar to what’s found in Microsoft Windows INI files. One can use this to write Python programs which can be customized by end users easily.
         
      i) Usage
      
@@ -47,7 +47,7 @@ II) Modules
                                 
   c) ArgParser
   
-        Python argparse is the recommended command-line argument parsing module in Python.
+   Python argparse is the recommended command-line argument parsing module in Python.
         
      i) Usage
      
@@ -59,7 +59,7 @@ II) Modules
 
   d) Regex 
        
-       A regular expression in a programming language is a special text string used for describing a search pattern. It is extremely useful for extracting information from text such as code, files, log, spreadsheets or even documents.
+   A regular expression in a programming language is a special text string used for describing a search pattern. It is extremely useful for extracting information from text such as code, files, log, spreadsheets or even documents.
         
      i) Usage
      
@@ -69,7 +69,7 @@ II) Modules
 
   e) sys
   
-        This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter.
+   This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter.
         
      i) Usage 
      
