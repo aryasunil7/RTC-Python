@@ -21,7 +21,7 @@ II) Modules
     i) Installation
         pip install requests
 
-   ii) Usage
+    ii) Usage
         import requests
 
         res = ses.get(url)
@@ -29,7 +29,7 @@ II) Modules
   
   b) configparser
         This module provides the ConfigParser class which implements a basic configuration language which provides a structure similar to what’s found in Microsoft Windows INI files. You can use this to write Python programs which can be customized by end users easily.
-   i) Usage
+     i) Usage
         import configparser
 
         config = configparser.ConfigParser()
@@ -38,7 +38,7 @@ II) Modules
                                 
   c) argparse
         Python argparse is the recommended command-line argument parsing module in Python.
-   i) Usage   
+     i) Usage   
         import argparse
 
         parser = argparse.ArgumentParser()
@@ -47,14 +47,14 @@ II) Modules
 
   d) Regex 
         A regular expression in a programming language is a special text string used for describing a search pattern. It is extremely useful for extracting information from text such as code, files, log, spreadsheets or even documents.
-   i) Usage
+     i) Usage
         import re
   
         response_key = re.findall(r',"key":"([a-z0-9]*)"', registerKey)
 
   e) sys
         This module provides access to some variables used or maintained by the interpreter and to functions that interact strongly with the interpreter.
-   i) Usage 
+     i) Usage 
         import sys
 
         sys.exit()
