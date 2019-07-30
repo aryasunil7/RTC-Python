@@ -1,6 +1,6 @@
 # RTC-Python
 											
- RTC-Python is developed in Python2.This application is developed for integrating RTC and GitHub
+ RTC-Python is developed in Python2.This application is developed for integrating RTC and GitHub such that it will automate the Repo_registration in Rtc and extraction of key.
 
 The 'jazzRepoUrl','git_url','projectId','username','password','api_endpoint1','api_endpoint2','api_endpoint3' values are read from rtc_config.ini using ConfigParser 
 
@@ -12,6 +12,7 @@ Application code 'app_code' and Component code 'comp_code' values are given thro
 - Keys for the registered repositories are generated and stored in a dictionary
  
  I) Requirement
+   -------------
     requests==2.22.0
  
 II) Modules
@@ -35,7 +36,7 @@ II) Modules
 
         config = configparser.ConfigParser()
         config.read('example.ini')	
-		    variable_name= config.get('session','option')
+		variable_name= config.get('session','option')
 		
   c) argparse
         Python argparse is the recommended command-line argument parsing module in Python.
@@ -59,3 +60,10 @@ II) Modules
         import sys
  
         sys.exit()
+		
+III) Explanation
+    -------------
+	-> The app_code and component_code are taken through command line using argparser.
+	-> The help message in the argparser will provide the details we have to provide.
+	-> The rest of the details are taken from the configuration file(rtc.ini).
+     
