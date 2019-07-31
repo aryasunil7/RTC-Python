@@ -91,7 +91,7 @@ IV) Command for Running the Code
       eg:- {'componenent_code1': 'key1', 'component_code2': 'key2', ....}
   - These keys are stored as a dictionary.
   
-IV) Known Errors
+VI) Known Errors
 ------------------
   - The second post api_endpoint2 is giving 200 as status if the username or password given is wrong instead of 404 error status.
   - But the repo is not registered in Rtc if username and passord is wrong.
