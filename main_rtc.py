@@ -45,7 +45,6 @@ config.read('rtc.ini')
 try:
     c_jazzRepoUrl = config.get('Default', 'jazzRepoUrl')
     c_git_url = config.get('Default', 'git_url')
-    #c_projectId = config.get('Default', 'projectId')
     c_username = config.get('User', 'username')
     c_password = config.get('User', 'password')
 except NoOptionError as err:
@@ -57,8 +56,6 @@ if not (c_jazzRepoUrl and c_git_url and c_username and c_password):
 
 # API setup
 git_url = (c_git_url[-1] == '/' and c_git_url or c_git_url + '/') + app_code
-#ownerItemId = c_projectId
-#currentPAItemId = c_projectId
 
 
 #Starting an opener with cookies and disabling ssl certificate verification
