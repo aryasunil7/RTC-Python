@@ -71,13 +71,6 @@ def find_team_area(team_areas, project_hierarchy):
 		return False
 
 
-print({app_code})
-print({*component_code})
-print({c_jazzRepoUrl})
-print({c_username})
-print({c_password})
-
-
 #Starting an opener with cookies and disabling ssl certificate verification
 # TODO SSL Certificate verification if any
 logging.warning('Disabling SSL verification.')
