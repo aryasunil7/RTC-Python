@@ -8,7 +8,7 @@ Requirement
 
 Usage
  -----------------------------------
-  python3 main_rtc.py --rc_url <Jazz Repo Url> --user <Username of Jazz Repo> --pass <Password of Jazz Repo> --git_url <Git Url> --app_code <Application Code> --component_code <Comma seperated component codes> --team_area <Comma separated team areas>  
+  python3 main_rtc.py --rc_url <Jazz Repo Url> --user "<Username of Jazz Repo>" --pass "<Password of Jazz Repo>" --git_url "<Git Url>" --app_code "<Application Code>" --component_code "<Space seperated component codes>" --team_area "<Space separated team areas>"  
   _eg_: python3 main_rtc.py --rtc_url https://127.0.0.1:9443/ccm --user username --pass password --git_url https://github.mycompany.com/ --app_code ABD --component_code abc_xyz,abc_pqr --team_area ABC/pqr,ABC/stu
 
  Arguments
@@ -18,8 +18,8 @@ Usage
   - ___--pass___: The password for the user pointed out by _username_.
   - ___--git_url___: The root URL for the GitHub enterprise repository. _eg_: https://github.mycompany.com/
   - ___--app_code___: The three letter application code. _eg_: ABC
-  - ___--component_code___: Comma seperated codes for the component applications. _eg_: abc_xyz, abc_pqr
-  - ___--team_area___: Comma seperated team areas for the component applications. _eg_: ABC/def, ABC/stu
+  - ___--component_code___: Space seperated codes for the component applications. _eg_: "abc_xyz" "abc_pqr"
+  - ___--team_area___: Comma seperated team areas for the component applications. _eg_: "ABC/def" "ABC/stu"
 
   Workflow
  -----------------------------------
