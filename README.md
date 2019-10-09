@@ -38,5 +38,5 @@ Usage
    
   Output
  -----------------------------------
-  The output of the script will be a mapping of the following format with an info ___Successfully updated Register Git Hub repo https://github.com/app_name/component_name1 with the generated key aslkdkaslkdoihaosiidhansamd ___: {component_code_1: key1, component_code_2: key2, ....}  
+  The output of the script will be a mapping of the following format with an info __Successfully updated Register Git Hub repo https://github.com/app_name/component_name1 with the generated key aslkdkaslkdoihaosiidhansamd__: {component_code_1: key1, component_code_2: key2, ....}  
   _eg:_ {'abc_xyz': 'aslkdkaslkdoihaosiidhansamd', 'abc_pqr': 'aslkdkaslkkdnlaksksndklasnd'}
