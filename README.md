@@ -30,9 +30,9 @@ Usage
      - ___rtc_url/authenticated/identity___: For enabling cookie based authentication
      - ___rtc_url/authenticated/j_security_check___: For enabling cookie based authentication
      - ___rtc_url/service/com.ibm.team.git.common.internal.IGitRepositoryRegistrationRestService/RegisterGitRepository___: For Registering the Git Repository
-     - __rtc_url/service/com.ibm.team.process.internal.service.web.IProcessWebUIService/projectAreasPaged__: For resolving Project_ID
-     - __rtc_url/service/com.ibm.team.git.common.internal.IGitRepositoryRegistrationRestService/updateRegisteredGit/Repository__:  For collecting the generated key and update the registered repo with key.
-     - __rtc_url/service/com.ibm.team.process.internal.service.web.IProcessWebUIService/projectHierarchy__: For getting project_hierarchy.
+     - ___rtc_url/service/com.ibm.team.process.internal.service.web.IProcessWebUIService/projectAreasPaged___: For resolving Project_ID
+     - ___rtc_url/service/com.ibm.team.git.common.internal.IGitRepositoryRegistrationRestService/updateRegisteredGit/Repository___:  For collecting the generated key and update the registered repo with key.
+     - ___rtc_url/service/com.ibm.team.process.internal.service.web.IProcessWebUIService/projectHierarchy___: For getting project_hierarchy.
 				
    - The response text after the third and fifth call is parsed for the key using json decoder.
    
